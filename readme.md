@@ -18,5 +18,8 @@ False/True = to be processed by ffmpeg into a video. False is a good option for 
 1. Set up a crontab -e and add this line: `TBD` <- Really, I will have this soon!>
 2. Note, `killall python` if you ssh in to your device and want to stop the script from running.
 
-You can view the timelapse video here: [Timelapse Video](media/timelapse_102824-0228PM.mp4)
+![Timelapse Video](media/output.gif)
+
+
+
 
