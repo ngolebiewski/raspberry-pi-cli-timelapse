@@ -17,7 +17,7 @@ False/True = to be processed by ffmpeg into a video. False is a good option for 
 1. Set up a crontab -e and add this line: `TBD` <- Really, I will have this soon!>
 2. Note, `killall python` if you ssh in to your device and want to stop the script from running.
 
-<video width="640" height="360" controls autoplay loop>
+<video width="640" height="360" controls>
   <source src="media/timelapse_102824-0228PM.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
