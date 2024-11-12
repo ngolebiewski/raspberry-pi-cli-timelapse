@@ -53,7 +53,9 @@ def take_timelapse(duration=600, interval=10, formatted_time=None):
     picam2 = Picamera2()
 
     # Configure the camera for preview (you can adjust the configuration if needed)
-    camera_config = picam2.create_preview_configuration()
+    # camera_config = picam2.create_preview_configuration()
+    
+    camera_config = picam2.create_still_configuration(main={"size": (2592, 1944)})
     picam2.configure(camera_config)
 
     # Start the camera
@@ -107,7 +109,8 @@ def convert_to_video(image_folder, formatted_time):
         '-pix_fmt', 'yuv420p',  # Pixel format for better compatibility
         '-crf', '24',  # Constant rate factor for higher quality (lower is better quality)
         '-preset', 'slow',  # Use 'slow' or 'veryslow' for better compression (optional)
-        '-vf', 'scale=640:360',  # Adjust this to your desired resolution (e.g., 1920x1080)
+        # '-vf', 'scale=640:360',  # Adjust this to your desired resolution (e.g., 1920x1080)
+        '-vf', 'scale=1280:720',  # Adjust this to your desired resolution (e.g., 1920x1080)
         output_video
     ]
 
