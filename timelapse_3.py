@@ -109,8 +109,8 @@ def convert_to_video(image_folder, formatted_time):
         '-pix_fmt', 'yuv420p',  # Pixel format for better compatibility
         '-crf', '24',  # Constant rate factor for higher quality (lower is better quality)
         '-preset', 'slow',  # Use 'slow' or 'veryslow' for better compression (optional)
-        # '-vf', 'scale=640:360',  # Adjust this to your desired resolution (e.g., 1920x1080)
-        '-vf', 'scale=1280:720',  # Adjust this to your desired resolution (e.g., 1920x1080)
+        '-vf', 'scale=640:360',  # Adjust this to your desired resolution (e.g., 1920x1080)
+        # '-vf', 'scale=1280:720',  # Adjust this to your desired resolution (e.g., 1920x1080)
         output_video
     ]
 
