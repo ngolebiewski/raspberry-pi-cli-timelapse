@@ -50,7 +50,7 @@ def strip_seconds(time_with_secs):
 def format_date(date_old):
     # 2024-11-15 to 11-15-2024
     date_obj = datetime.strptime(date_old, "%Y-%m-%d")
-    formatted_date = date_obj.strftime("%m-%d-%Y")
+    formatted_date = date_obj.strftime("%m/%d/%Y")
     return formatted_date
     
 def parse_sun_info(sun_data):
