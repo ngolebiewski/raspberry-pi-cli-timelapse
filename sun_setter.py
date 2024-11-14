@@ -3,15 +3,17 @@ import json
 import sys
 from datetime import datetime
 import subprocess
+import os
+from dotenv import load_dotenv
 
 def get_sunsets():
+    """Fetches sunrise/sunset data from sunrisesunset.io and returns a list by day of sundata dicts"""
     base_url = 'https://api.sunrisesunset.io/'
     lat_long='lat=40.71427&lng=-74.00597'
     start_date = '2024-11-14'
     end_date = '2024-11-15'
     # https://api.sunrisesunset.io/json?lat=40.71427&lng=-74.00597
-    # &date_start=1990-05-01&date_end=1990-07-01
-    
+
     response = requests.get(f'{base_url}json?{lat_long}&date_start={start_date}&date_end={end_date}&time_format=24')
     if response.status_code == 200:
         print(json.dumps(response.json(), indent=2))
@@ -38,17 +40,13 @@ def get_sunsets():
     },
     """
     
-    
-def set_sunsets(sun_data):
-    pass
-
 def strip_seconds(time_with_secs):
-    # time_with_secs like "06:42:21" and returns "06:42"
+    '''time_with_secs like "06:42:21" and returns "06:42"'''
     formatted_time = datetime.strptime(time_with_secs, "%H:%M:%S").strftime("%H:%M")
     return formatted_time
 
 def format_date(date_old):
-    # 2024-11-15 to 11-15-2024
+    '''2024-11-15 to 11-15-2024'''
     date_obj = datetime.strptime(date_old, "%Y-%m-%d")
     formatted_date = date_obj.strftime("%m/%d/%Y")
     return formatted_date
@@ -61,26 +59,27 @@ def parse_sun_info(sun_data):
         golden_hour = strip_seconds(sunstats['golden_hour'])
         print("date:", date, "dawn:", dawn, "golden_hour:", golden_hour)
         sun_tuples.append(tuple((date, dawn, golden_hour)))
-        print("sun_tuples: ", sun_tuples)
+        # print("sun_tuples: ", sun_tuples)
     return sun_tuples
 
 def create_at_commands(sun_tuples):
+    load_dotenv()
+    username = os.getenv('USERNAME')
     at_commands = []
-    dir = '/home/calderg/Documents/coding_projects/raspberry-pi-cli-timelapse'
+    dir = f'/home/{username}/Documents/coding_projects/raspberry-pi-cli-timelapse'
     python_loc = '/usr/bin/python'
     script = 'timelapse_3.py 3600 20 True'
-    log = f'/home/calderg/Documents/coding_projects/raspberry-pi-cli-timelapse/timelapse_sun_setter.log 2>&1'
+    log = f'/home/{username}/Documents/coding_projects/raspberry-pi-cli-timelapse/timelapse_sun_setter.log 2>&1'
     for times in sun_tuples:
         at_dawn = f'echo "cd {dir} && {python_loc} {script} >> {log}" | at {times[1]} {times[0]}'
         at_golden_hour = f'echo "cd {dir} && {python_loc} {script} >> {log}" | at {times[2]} {times[0]}'
-        # print(at_dawn)
-        # print(at_golden_hour)
+        print(at_dawn)
+        print(at_golden_hour)
         at_commands.append(at_dawn)
         at_commands.append(at_golden_hour)
+    
     # print(at_commands)
     return at_commands
-
-        
         
         
     # {
@@ -119,6 +118,7 @@ def main():
 if __name__=="__main__":
     main()
     
+    
 '''
 Steps to Use at on a Raspberry Pi
 
@@ -126,6 +126,8 @@ sudo apt install at
 sudo systemctl start atd
 sudo systemctl enable atd  # To start at boot
 
-atq # see scheduled at jobs
+atq         # see scheduled at jobs
+at -c 4     # see details
+atrm 4      # remove a specific job
 
 '''
