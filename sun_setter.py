@@ -114,7 +114,7 @@ def main():
     sun_data = get_sunsets()
     sun_tuples = parse_sun_info(sun_data)
     at_commands = create_at_commands(sun_tuples)
-    write_at_jobs(at_commands, on=True)
+    write_at_jobs(at_commands, on=False)
 
 if __name__=="__main__":
     main()
@@ -125,5 +125,7 @@ Steps to Use at on a Raspberry Pi
 sudo apt install at
 sudo systemctl start atd
 sudo systemctl enable atd  # To start at boot
+
+atq # see scheduled at jobs
 
 '''
