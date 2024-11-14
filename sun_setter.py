@@ -114,7 +114,7 @@ def main():
     sun_data = get_sunsets()
     sun_tuples = parse_sun_info(sun_data)
     at_commands = create_at_commands(sun_tuples)
-    write_at_jobs(at_commands, on=False)
+    write_at_jobs(at_commands, on=True)
 
 if __name__=="__main__":
     main()
